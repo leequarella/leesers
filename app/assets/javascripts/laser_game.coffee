@@ -21,30 +21,30 @@ class @LaserGame
 
   initMirrors: ->
     @mirrors = [
-      new Mirror(100, 50, 2)
-      new Mirror(200, 50, 2)
-      new Mirror(300, 50, 2)
-      new Mirror(400, 50, 2)
+      new Mirror(100, 50, 1)
+      new Mirror(200, 50, 1)
+      new Mirror(300, 50, 1)
+      new Mirror(400, 50, 1)
 
       new Mirror(100, 125, 1)
-      new Mirror(200, 125, 2)
-      new Mirror(300, 125, 2)
-      new Mirror(400, 125, 2)
+      new Mirror(200, 125, 1)
+      new Mirror(300, 125, 1)
+      new Mirror(400, 125, 1)
 
-      new Mirror(100, 200, 2)
-      new Mirror(200, 200, 2)
-      new Mirror(300, 200, 2)
-      new Mirror(400, 200, 2)
+      new Mirror(100, 200, 1)
+      new Mirror(200, 200, 1)
+      new Mirror(300, 200, 1)
+      new Mirror(400, 200, 1)
 
-      new Mirror(100, 275, 2)
-      new Mirror(200, 275, 2)
-      new Mirror(300, 275, 2)
-      new Mirror(400, 275, 2)
+      new Mirror(100, 275, 1)
+      new Mirror(200, 275, 1)
+      new Mirror(300, 275, 1)
+      new Mirror(400, 275, 1)
 
-      new Mirror(100, 350, 2)
-      new Mirror(200, 350, 2)
-      new Mirror(300, 350, 2)
-      new Mirror(400, 350, 2)
+      new Mirror(100, 350, 1)
+      new Mirror(200, 350, 1)
+      new Mirror(300, 350, 1)
+      new Mirror(400, 350, 1)
     ]
 
   tick: ->
