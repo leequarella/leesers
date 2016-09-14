@@ -26,16 +26,16 @@ class @LaserGame
 
   initLasers: ->
     six_lasers = [
-      new Laser(0, 124, "East", "#325170")
-      new Laser(0, 204, "East", "#461d42")
-      new Laser(0, 274, "East", "#cffb4c")
+      new Laser(0, 125, "East", "#325170")
+      new Laser(0, 200, "East", "#461d42")
+      new Laser(0, 275, "East", "#cffb4c")
       new Laser(@canvas.width, 125, "West", "#a00")
       new Laser(@canvas.width, 200, "West", "#451407")
       new Laser(@canvas.width, 275, "West", "#d0cb2f")
     ]
 
     two_lasers = [
-      new Laser(0, 204, "East", "#f00")
+      new Laser(0, 200, "East", "#f00")
       new Laser(@canvas.width, 200, "West", "#0f0")
     ]
 
@@ -51,12 +51,12 @@ class @LaserGame
       new Mirror(100, 125, 1)
       new Mirror(200, 125, 2)
       new Mirror(300, 125, 1)
-      new Mirror(400, 125, 2)
+      new Mirror(400, 125, 1)
 
       new Mirror(100, 200, 2)
       new Mirror(200, 200, 1)
-      new Mirror(300, 200, 1)
-      new Mirror(400, 200, 1)
+      new Mirror(300, 200, 2)
+      new Mirror(400, 200, 2)
 
       new Mirror(100, 275, 2)
       new Mirror(200, 275, 1)
