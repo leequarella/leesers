@@ -10,7 +10,6 @@ class @Mirror
     @start_y = @center_y - ((@length/2) * Math.sin(@angle))
     @end_x = @start_x + (@length * Math.cos(@angle))
     @end_y = @start_y + (@length * Math.sin(@angle))
-    console.log @angle
 
   draw: (canvas)->
     ctx = canvas.getContext("2d")
@@ -30,13 +29,10 @@ class @Mirror
     return angle
 
   toggle: ->
-    console.log "old position is #{@position}"
     switch @position
       when 1
-        console.log "changing to 2"
         @position = 2
       when 2
-        console.log "changing to 1"
         @position = 1
 
     @calcPosition()

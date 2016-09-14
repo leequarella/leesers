@@ -8,16 +8,38 @@ class @LaserGame
 
   init: ->
     @initMirrors()
-    @tick()
+    @initTargets()
+    @gameLoop = setInterval( (=>@tick()), 60)
+
+  initTargets: ->
+    @targets = [
+      new Target(1, 100, 0)
+      new Target(1, 200, 0)
+      new Target(1, 300, 0)
+      new Target(1, 400, 0)
+
+      new Target(2, 100, @canvas.height)
+      new Target(2, 200, @canvas.height)
+      new Target(2, 300, @canvas.height)
+      new Target(2, 400, @canvas.height)
+    ]
 
   initLasers: ->
-    @lasers = [
+    six_lasers = [
       new Laser(0, 124, "East", "#325170")
-      new Laser(0, 204, "East", "#461d42"),
-      new Laser(0, 274, "East", "#cffb4c"),
-      new Laser(@canvas.width, 125, "West", "#a00"),
-      new Laser(@canvas.width, 200, "West", "#451407"),
-      new Laser(@canvas.width, 275, "West", "#d0cb2f")]
+      new Laser(0, 204, "East", "#461d42")
+      new Laser(0, 274, "East", "#cffb4c")
+      new Laser(@canvas.width, 125, "West", "#a00")
+      new Laser(@canvas.width, 200, "West", "#451407")
+      new Laser(@canvas.width, 275, "West", "#d0cb2f")
+    ]
+
+    two_lasers = [
+      new Laser(0, 204, "East", "#f00")
+      new Laser(@canvas.width, 200, "West", "#0f0")
+    ]
+
+    @lasers = two_lasers
 
   initMirrors: ->
     @mirrors = [
@@ -51,46 +73,16 @@ class @LaserGame
     @clearCanvas()
     @initLasers()
     @reflect(laser) for laser in @lasers
+
     mirror.draw(@canvas) for mirror in @mirrors
     laser.draw(@canvas) for laser in @lasers
+    target.draw(@ctx) for target in @targets
 
-  findIntersection: (line_1, line_2) ->
-    result = {
-      x: null,
-      y: null,
-      on_line_1: false,
-      on_line_2: false
-    }
-
-    denominator = ((line_2.end_y - line_2.start_y) * (line_1.end_x - line_1.start_x)) -
-      ((line_2.end_x - line_2.start_x) * (line_1.end_y - line_1.start_y))
-
-    return false if denominator == 0
-
-    a = line_1.start_y - line_2.start_y
-    b = line_1.start_x - line_2.start_x
-    numerator1 = ((line_2.end_x - line_2.start_x) * a) - ((line_2.end_y - line_2.start_y) * b)
-    numerator2 = ((line_1.end_x - line_1.start_x) * a) - ((line_1.end_y - line_1.start_y) * b)
-    a = numerator1 / denominator
-    b = numerator2 / denominator
-
-    # if we cast these lines infinitely in both directions, they intersect here:
-    result.x = line_1.start_x + (a * (line_1.end_x - line_1.start_x))
-    result.y = line_1.start_y + (a * (line_1.end_y - line_1.start_y))
-    # if line_1 is a segment and line_2 is infinite, they intersect if:
-    if (a > 0 && a < 1)
-        result.on_line_1 = true
-    # if line_2 is a segment and line_1 is infinite, they intersect if:
-    if (b > 0 && b < 1)
-        result.on_line_2 = true
-    # if line_1 and line_2 are segments, they intersect if both of the above are true
-
-    return result
 
   findLaserMirrorIntersections: (laser) ->
     intersections = []
     for mirror, i in @mirrors
-      intersection = @findIntersection(laser, mirror)
+      intersection = LineIntersection.findIntersection(laser, mirror)
       intersection.mirror_id = i
       if intersection.on_line_1 && intersection.on_line_2
         intersections.push intersection
@@ -99,9 +91,7 @@ class @LaserGame
 
   reflect: (laser) ->
     laser.calcActualEnd(@findLaserMirrorIntersections(laser))
-    if laser.hasTerminated(@canvas)
-      console.log "Laser hit a wall."
-    else
+    unless laser.hasTerminated(@canvas)
       intersected_mirror = @mirrors[laser.intersected_mirror_id]
       new_direction = laser.determineNewDirection(intersected_mirror)
       new_starting_position = laser.calcNextStartingPosition(intersected_mirror)
@@ -111,5 +101,4 @@ class @LaserGame
 
   toggleMirror: (mirror_id) ->
     @mirrors[mirror_id] = @mirrors[mirror_id].toggle()
-    @tick()
 
