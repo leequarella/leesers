@@ -1,12 +1,55 @@
 class @LaserGame
   constructor: ->
     @canvas = document.getElementById("gameCanvas")
+    @ctx = @canvas.getContext("2d")
+
+  clearCanvas: ->
+    @ctx.clearRect(0, 0, @canvas.width, @canvas.height)
 
   init: ->
-    @mirrors = [new Mirror(195, 201, 1), new Mirror(195, 101, 2)]
-    @lasers = [new Laser(0, 205, "East"),
-      new Laser(@canvas.width, 215, "West")]
+    @initMirrors()
+    @tick()
 
+  initLasers: ->
+    @lasers = [
+      new Laser(0, 124, "East", "#325170")
+      new Laser(0, 204, "East", "#461d42"),
+      new Laser(0, 274, "East", "#cffb4c"),
+      new Laser(@canvas.width, 125, "West", "#a00"),
+      new Laser(@canvas.width, 200, "West", "#451407"),
+      new Laser(@canvas.width, 275, "West", "#d0cb2f")]
+
+  initMirrors: ->
+    @mirrors = [
+      new Mirror(100, 50, 2)
+      new Mirror(200, 50, 2)
+      new Mirror(300, 50, 2)
+      new Mirror(400, 50, 2)
+
+      new Mirror(100, 125, 1)
+      new Mirror(200, 125, 2)
+      new Mirror(300, 125, 2)
+      new Mirror(400, 125, 2)
+
+      new Mirror(100, 200, 2)
+      new Mirror(200, 200, 2)
+      new Mirror(300, 200, 2)
+      new Mirror(400, 200, 2)
+
+      new Mirror(100, 275, 2)
+      new Mirror(200, 275, 2)
+      new Mirror(300, 275, 2)
+      new Mirror(400, 275, 2)
+
+      new Mirror(100, 350, 2)
+      new Mirror(200, 350, 2)
+      new Mirror(300, 350, 2)
+      new Mirror(400, 350, 2)
+    ]
+
+  tick: ->
+    @clearCanvas()
+    @initLasers()
     @reflect(laser) for laser in @lasers
     mirror.draw(@canvas) for mirror in @mirrors
     laser.draw(@canvas) for laser in @lasers
@@ -62,6 +105,11 @@ class @LaserGame
       intersected_mirror = @mirrors[laser.intersected_mirror_id]
       new_direction = laser.determineNewDirection(intersected_mirror)
       new_starting_position = laser.calcNextStartingPosition(intersected_mirror)
-      new_laser = new Laser(new_starting_position.x, new_starting_position.y, new_direction)
+      new_laser = new Laser(new_starting_position.x, new_starting_position.y, new_direction, laser.color)
       @lasers.push new_laser
       @reflect(new_laser)
+
+  toggleMirror: (mirror_id) ->
+    @mirrors[mirror_id] = @mirrors[mirror_id].toggle()
+    @tick()
+

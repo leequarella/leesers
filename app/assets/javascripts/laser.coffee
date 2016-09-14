@@ -1,5 +1,5 @@
 class @Laser
-  constructor: (@start_x, @start_y, @direction) ->
+  constructor: (@start_x, @start_y, @direction, @color="#f00") ->
     @calcNaturalEnd()
 
   calcNaturalEnd: ->
@@ -112,5 +112,5 @@ class @Laser
     ctx.moveTo(@start_x, @start_y)
     ctx.lineTo(@end_x, @end_y)
 
-    ctx.strokeStyle = '#ff0000'
+    ctx.strokeStyle = @color
     ctx.stroke()

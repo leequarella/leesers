@@ -1,6 +1,36 @@
-%canvas#gameCanvas{width: 600, height: 400, style: "border: 1px dotted black"}
+%div{style: "text-align: center"}
+  %canvas#gameCanvas{width: 500, height: 400, style: "border: 1px dotted black"}
+
+%div{style: "text-align: center"}
+  .row
+    %button{onclick: "Game.toggleMirror(0)"} B
+    %button{onclick: "Game.toggleMirror(1)"} B
+    %button{onclick: "Game.toggleMirror(2)"} B
+    %button{onclick: "Game.toggleMirror(3)"} B
+  .row
+    %button{onclick: "Game.toggleMirror(4)"} B
+    %button{onclick: "Game.toggleMirror(5)"} B
+    %button{onclick: "Game.toggleMirror(6)"} B
+    %button{onclick: "Game.toggleMirror(7)"} B
+  .row
+    %button{onclick: "Game.toggleMirror(8)"} B
+    %button{onclick: "Game.toggleMirror(9)"} B
+    %button{onclick: "Game.toggleMirror(10)"} B
+    %button{onclick: "Game.toggleMirror(11)"} B
+  .row
+    %button{onclick: "Game.toggleMirror(12)"} B
+    %button{onclick: "Game.toggleMirror(13)"} B
+    %button{onclick: "Game.toggleMirror(14)"} B
+    %button{onclick: "Game.toggleMirror(15)"} B
+
+  .row
+    %button{onclick: "Game.toggleMirror(16)"} B
+    %button{onclick: "Game.toggleMirror(17)"} B
+    %button{onclick: "Game.toggleMirror(18)"} B
+    %button{onclick: "Game.toggleMirror(19)"} B
 
 :coffeescript
+  window.Game = new LaserGame
+
   $ ->
-    window.Game = new LaserGame
     Game.init()
