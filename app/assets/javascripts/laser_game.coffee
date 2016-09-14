@@ -7,6 +7,7 @@ class @LaserGame
     @ctx.clearRect(0, 0, @canvas.width, @canvas.height)
 
   init: ->
+    clearInterval(@gameLoop) if @gameLoop
     @initMirrors()
     @initTargets()
     @gameLoop = setInterval( (=>@tick()), 60)

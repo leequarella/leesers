@@ -29,6 +29,10 @@
     %button{onclick: "Game.toggleMirror(18)"} 19
     %button{onclick: "Game.toggleMirror(19)"} 20
 
+
+%hr
+  %button{onclick: "Game.init()"} Reset
+
 :coffeescript
   window.Game = new LaserGame
 
